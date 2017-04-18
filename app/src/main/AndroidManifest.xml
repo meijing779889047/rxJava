@@ -15,6 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".rxSample.SimpleUseActivity"></activity>
     </application>
 
 </manifest>
