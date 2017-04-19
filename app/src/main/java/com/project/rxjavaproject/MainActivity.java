@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.project.rxjavaproject.observerpattern.ChildObserver;
 import com.project.rxjavaproject.observerpattern.ChildSubject;
 import com.project.rxjavaproject.rxSample.SimpleUseActivity;
+import com.project.rxjavaproject.schedule.ScheduleActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.button1, R.id.button2})
+    @OnClick({R.id.button1, R.id.button2,R.id.button3})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button1://观察者模式
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.button2://rxjava的简单使用
                 startActivity(new Intent(this, SimpleUseActivity.class));
+                break;
+            case R.id.button3://rxjava的线程控制
+                startActivity(new Intent(this, ScheduleActivity.class));
                 break;
         }
     }

@@ -64,7 +64,13 @@ public class SimpleUseActivity extends AppCompatActivity {
                 //订阅
                 justObservable.subscribe(justObserver);
                 break;
-            case R.id.button3://from（）的使用
+            case R.id.button3://fromArray（）的使用
+                //创建被观察者
+                Observable<List<String>> fromArrayObservable = getFromArrayObservable();
+                //创建观察者
+                Observer<List<String>> fromArrayObserver = getListObserver();
+                //订阅
+                fromArrayObservable.subscribe(fromArrayObserver);
                 break;
         }
     }
@@ -105,7 +111,9 @@ public class SimpleUseActivity extends AppCompatActivity {
      * 获取observable   被观察者
      * @return
      */
-    public  Observable<List<String>> getFromObservable(){
+    public  Observable<List<String>> getFromArrayObservable(){
+        Observable<String> result = Observable.fromArray("1");
+        Observable<Integer> result1 = Observable.fromArray(11);
          List<String> list=new ArrayList<>();
          list.add("数据1");
          list.add("数据1");
@@ -140,7 +148,33 @@ public class SimpleUseActivity extends AppCompatActivity {
             }
         };
     }
+    /**
+     * 获取observer   观察者
+     * @return
+     */
+    public Observer<List<String>>  getListObserver(){
+        return   new Observer<List<String>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.i(TAG,"在被观察者发送数前调用 onSubscribe（）");
+            }
 
+            @Override
+            public void onNext(List<String> value) {
+                Log.i(TAG,"当被观察者发送数据后接收数据:"+value.toString()+" onNext()");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.i(TAG,"当被观察者发送数出现异常时发送的一场数据:"+e.getMessage()+"   onError()");
+            }
+
+            @Override
+            public void onComplete() {
+                Log.i(TAG,"当被观察者发送数据完成后触发onComplete()");
+            }
+        };
+    }
 
     @Override
     protected void onDestroy() {
