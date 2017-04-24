@@ -31,6 +31,7 @@ public class ScheduleActivity extends AppCompatActivity {
     LinearLayout activitySchedule;
     private String TAG = "ScheduleActivity";
     private long result = 0;
+    private Disposable mDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +49,13 @@ public class ScheduleActivity extends AppCompatActivity {
 
 
     public void getObserver() {
-        Observable.interval(2, 2, TimeUnit.SECONDS)
+         Observable.interval(2, 2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())//observabler在io线程操作
                 .observeOn(AndroidSchedulers.mainThread())//observer在主线程操作
                 .subscribe(new Observer<Long>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                            mDisposable=d;
                     }
 
                     @Override
@@ -75,5 +76,15 @@ public class ScheduleActivity extends AppCompatActivity {
                         Log.i(TAG, "获取数据完成");
                     }
                 });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(mDisposable!=null){
+            mDisposable.dispose();
+        }
     }
 }
